@@ -1,4 +1,5 @@
 import pygame
+from bullet import Bullet
 
 IMG_AGENT = './assets/spaceship.png'
 SPACESHIP_WIDTH = 40
@@ -12,11 +13,14 @@ class Spaceship(pygame.sprite.Sprite):
         super(Spaceship, self).__init__()
         self.ww = WINDOW_WIDTH
         self.wh = WINDOW_HEIGHT
+        
         self.startx = WINDOW_WIDTH * .45
         self.starty = WINDOW_HEIGHT * .75
+        
         self.image = pygame.image.load(IMG_AGENT).convert()
         self.image = pygame.transform.scale(
             self.image, (SPACESHIP_WIDTH, SPACESHIP_HEIGHT))
+        
         self.rect = self.image.get_rect()
         self.rect.x = self.startx
         self.rect.y = self.starty
@@ -39,3 +43,10 @@ class Spaceship(pygame.sprite.Sprite):
             self.rect.top = 0
         if self.rect.bottom >= self.wh:
             self.rect.bottom = self.wh
+
+    def shoot(self):
+        return Bullet(self.rect.centerx, self.rect.top)
+
+    def reset_pos(self):
+        self.rect.x = self.startx
+        self.rect.y = self.starty
